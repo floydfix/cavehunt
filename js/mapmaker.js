@@ -9,10 +9,8 @@ $(document).ready(function() {
 	const ALEFT = 7;
 	const spriteSize = 16;
 	const mapWidth = 15;
-
-	const scale = (num, in_min, in_max, out_min, out_max) => {
-	  return Math.floor((num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
-	}
+	const mapHeight = 15;
+	const scale = 3;
 
 	let mapCanvas = $('#canvas')[0];
 	let map = mapCanvas.getContext('2d');
@@ -32,10 +30,11 @@ $(document).ready(function() {
 	let i;
 	let mapPos = [0, 0];
 	let tilesPos = [0, 0];
+	let tilesWidth;
 	let lastTime = 0;
 	let counter = 0;
-	map.scale(3,3);
-	tiles.scale(3,3);
+	map.scale(scale, scale);
+	tiles.scale(scale ,scale);
 
 
 	///////////////////////////////////////////
@@ -114,8 +113,8 @@ $(document).ready(function() {
 		x -= mapCanvas.offsetLeft;
 		y -= mapCanvas.offsetTop;
 
-		x = scale(x, 0, i.width, 0, i.width / (spriteSize * 3));
-		y = scale(y, 0, i.width, 0, i.width / (spriteSize * 3));
+		x = scaleRange(x, 0, mapWidth * spriteSize, 0, mapWidth * scale);
+		y = scaleRange(y, 0, mapWidth * spriteSize, 0, mapHeight * scale);
 
 		mapPos = [x, y];
 		placeTile();
@@ -132,8 +131,8 @@ $(document).ready(function() {
 		x += scroll.scrollLeft;
 		y += scroll.scrollTop;
 
-		x = scale(x, 0, i.width, 0, i.width / (spriteSize * 3));
-		y = scale(y, 0, i.width, 0, i.width / (spriteSize * 3));
+		x = scaleRange(x, 0, i.width, 0, i.width / (spriteSize * scale));
+		y = scaleRange(y, 0, i.height, 0, i.height / (spriteSize * scale));
 
 		tilesPos = [x, y];
 		placeTile();
@@ -209,7 +208,7 @@ $(document).ready(function() {
 		return new Promise(r => {  i = new Image(); i.onload = (() => r(i)); i.src = url; });
 	}
 
-	function placeTile(tile = tilesPos[0] + (tilesPos[1] % spriteSize) * spriteSize) {
+	function placeTile(tile = tilesPos[0] * 10000 + tilesPos[1]) {
 		// get the selected layer
 		var selArray = $($('input[name=sel]:checked')[0]).val();
 		if (selArray == "walls")
@@ -230,16 +229,16 @@ $(document).ready(function() {
 		map.fillRect(0, 0, mapCanvas.height, mapCanvas.width);
 
 		if ($('#showGround').prop('checked'))
-			drawWalls(map, groundArray, spritesHidden, spriteSize);
+			drawWalls(map, groundArray, spritesHidden, tilesWidth, spriteSize);
 	
 		if ($('#showWalls').prop('checked'))
-			drawWalls(map, wallsArray, spritesHidden, spriteSize);
+			drawWalls(map, wallsArray, spritesHidden, tilesWidth, spriteSize);
 
 		if ($('#showOverlay').prop('checked'))
-			drawWalls(map, overlayArray, spritesHidden, spriteSize);
+			drawWalls(map, overlayArray, spritesHidden, tilesWidth, spriteSize);
 	
 		if ($('#showSprites').prop('checked'))
-			drawWalls(map, spritesArray, spritesHidden, spriteSize);
+			drawWalls(map, spritesArray, spritesHidden, tilesWidth, spriteSize);
 
 		let x = mapPos[0] * spriteSize;
 		let y = mapPos[1] * spriteSize;
