@@ -16,21 +16,14 @@ $(document).ready(function() {
 
 	let mapCanvas = $('#canvas')[0];
 	let map = mapCanvas.getContext('2d');
-	let mapArray = [['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*'],
-					['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*']];
+	map.imageSmoothingEnabled = false;
+
+	let groundArray = [["0","1","1","1","1","1","1","1","2","*","*","*","*","*","*"],["16","17","17","17","17","17","17","17","18","*","*","*","*","*","*"],["16","17","17","17","17","17","17","17","18","*","*","*","*","*","*"],["16","17","17","17","17","17","17","17","18","*","*","*","*","*","*"],["16","17","17","17","17","17","17","17","18","*","*","*","*","*","*"],["16","17","17","17","17","17","17","17","18","*","*","*","*","*","*"],["32","33","19","17","17","17","20","33","34","*","*","*","*","*","*"],["*","*","16","17","17","17","18","*","*","*","*","*","*","*","*"],["*","*","16","17","17","17","18","*","*","*","*","*","*","*","*"],["*","*","16","17","17","17","18","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"]];
+	let wallsArray = [["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"]];
+	let overlayArray = [["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"]];
+	let spritesArray = [["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"],["*","*","*","*","*","*","*","*","*","*","*","*","*","*","*"]];
+	let currentArray = groundArray;
+
 	let sprites = document.getElementById("sprites");
 	let tiles = sprites.getContext('2d');
 	let spritesHidden = document.getElementById("spritesHidden");
@@ -48,20 +41,33 @@ $(document).ready(function() {
 	///////////////////////////////////////////
 	// EVENT LISTENERS
 
+	$('input[name=sel]').click(() => {
+		let check = this.activeElement.parentElement.childNodes[1];
+		if (!check.checked)
+			check.checked = true;
+	});
+
 	$('#export').click(function() {
 		let str = "[";
-		for (var i = 0; i < mapWidth; i++) {
-			str += "[";
-			for (var j = 0; j < mapWidth; j++) {
-				str += '"' + mapArray[i][j] + '"';
-				if (j != mapWidth - 1)
+		for (var a = 0; a < 4; a++) {
+			let currentArray = a == 0 ? groundArray : a == 1 ? wallsArray : a == 2 ? overlayArray : spritesArray;
+			str += "[";			
+			for (var i = 0; i < mapWidth; i++) {
+				str += "[";
+				for (var j = 0; j < mapWidth; j++) {
+					str += '"' + currentArray[i][j] + '"';
+					if (j != mapWidth - 1)
+						str += ",";
+				}
+				str += "]";
+				if (i != mapWidth - 1)
 					str += ",";
 			}
 			str += "]";
-			if (i != mapWidth - 1)
+			if (a != 3)
 				str += ",";
 		}
-		str += "]";
+		str += "];"
 		console.log(str);		
 	});
 
@@ -95,16 +101,53 @@ $(document).ready(function() {
 			case 32:
 				placeTile();
 			break;
+			case 67:
+				placeTile("*");
+			break;
 		}
 	});
+
+	mapCanvas.addEventListener("mousedown", (event) => {
+		var x = event.x;
+		var y = event.y;
+
+		x -= mapCanvas.offsetLeft;
+		y -= mapCanvas.offsetTop;
+
+		x = scale(x, 0, i.width, 0, i.width / (spriteSize * 3));
+		y = scale(y, 0, i.width, 0, i.width / (spriteSize * 3));
+
+		mapPos = [x, y];
+		placeTile();
+	}, false);
+
+	sprites.addEventListener("mousedown", (event) => {
+		var x = event.x;
+		var y = event.y;
+
+		x -= sprites.offsetLeft;
+		y -= sprites.offsetTop;
+
+		let scroll = $('.scroll')[0];
+		x += scroll.scrollLeft;
+		y += scroll.scrollTop;
+
+		x = scale(x, 0, i.width, 0, i.width / (spriteSize * 3));
+		y = scale(y, 0, i.width, 0, i.width / (spriteSize * 3));
+
+		tilesPos = [x, y];
+		placeTile();
+	} , false);
 
 	function moveSelector(direction, map = false) {
 		let newPos = [0,0];
 		let checkPos = tilesPos;
-		let tileLength = 10;
+		let tW = tilesWidth;
+		let tH = tilesHeight;
 		if (map) {
 			checkPos = mapPos;
-			tileLength = 14;
+			tW = 14;
+			tH = 14;
 		}	
 
 		if (direction != null) {
@@ -114,11 +157,11 @@ $(document).ready(function() {
 					newPos[1] = checkPos[1] - 1;
 				} else {
 					newPos[0] = checkPos[0];
-					newPos[1] = tileLength;
+					newPos[1] = tH;
 				}
 			}
 			if (direction == DOWN || direction == SDOWN) {
-				if (checkPos[1] < tileLength) {
+				if (checkPos[1] < tH) {
 					newPos[0] = checkPos[0];
 					newPos[1] = checkPos[1] + 1;
 				} else {
@@ -131,12 +174,12 @@ $(document).ready(function() {
 					newPos[0] = checkPos[0] - 1;
 					newPos[1] = checkPos[1];
 				} else {
-					newPos[0] = tileLength;
+					newPos[0] = tW;
 					newPos[1] = checkPos[1];
 				}
 			}
 			if (direction == RIGHT || direction == DRIGHT) {
-				if (checkPos[0] < tileLength) {
+				if (checkPos[0] < tW) {
 					newPos[0] = checkPos[0] + 1;
 					newPos[1] = checkPos[1];
 				} else {
@@ -151,54 +194,53 @@ $(document).ready(function() {
 			tilesPos = newPos;
 	}
 
-	mapCanvas.addEventListener("mousedown", (event) => {
-	  var x = event.x;
-	  var y = event.y;
-
-	  x -= mapCanvas.offsetLeft;
-	  y -= mapCanvas.offsetTop;
-
-	  x = scale(x, 0, i.width, 0, i.width / (spriteSize * 3));
-	  y = scale(y, 0, i.width, 0, i.width / (spriteSize * 3));
-
-	  mapPos = [x, y];
-	  placeTile();
-	}, false);
-
-	sprites.addEventListener("mousedown", (event) => {
-	  var x = event.x;
-	  var y = event.y;
-
-	  x -= sprites.offsetLeft;
-	  y -= sprites.offsetTop;
-
-	  x = scale(x, 0, i.width, 0, i.width / (spriteSize * 3));
-	  y = scale(y, 0, i.width, 0, i.width / (spriteSize * 3));
-
-	  tilesPos = [x, y];
-	  placeTile();
-	} , false);
-
-	function loadImage(url) {
-	  return new Promise(r => {  i = new Image(); i.onload = (() => r(i)); i.src = url; });
-	}
-
 	async function loadTiles() {
-		tilesImg = await loadImage("./img/Dungeon_Tileset.png");
+		tilesImg = await loadImage("./img/DungeonStarter.png");
 		tiles.drawImage(tilesImg, 0, 0);
 		tilesHidden.drawImage(tilesImg, 0, 0);
+		
+		$('.scroll')[0].height = tilesImg.height;
+		$('.scroll')[0].width = tilesImg.height;
+		tilesHeight = tilesImg.height / spriteSize;
+		tilesWidth = tilesImg.width / spriteSize;
 	}
 
-	function placeTile() {
-		mapArray[mapPos[1]].splice(mapPos[0], 1, tilesPos[0] + (tilesPos[1] % spriteSize) * spriteSize);
+	function loadImage(url) {
+		return new Promise(r => {  i = new Image(); i.onload = (() => r(i)); i.src = url; });
+	}
+
+	function placeTile(tile = tilesPos[0] + (tilesPos[1] % spriteSize) * spriteSize) {
+		// get the selected layer
+		var selArray = $($('input[name=sel]:checked')[0]).val();
+		if (selArray == "walls")
+			currentArray = wallsArray;
+		else if (selArray == "ground")
+			currentArray = groundArray;
+		else if (selArray == "overlay")
+			currentArray = overlayArray;
+		else if (selArray == "sprites")
+			currentArray = spritesArray;
+
+		// splice the number into the correct layers arrray
+		currentArray[mapPos[1]].splice(mapPos[0], 1, tile);
 	}
 
 	function draw() {
 		map.fillStyle = "#FFFFFF";
 		map.fillRect(0, 0, mapCanvas.height, mapCanvas.width);
 
-		drawWalls(map, mapArray, spritesHidden, spriteSize);
+		if ($('#showGround').prop('checked'))
+			drawWalls(map, groundArray, spritesHidden, spriteSize);
 	
+		if ($('#showWalls').prop('checked'))
+			drawWalls(map, wallsArray, spritesHidden, spriteSize);
+
+		if ($('#showOverlay').prop('checked'))
+			drawWalls(map, overlayArray, spritesHidden, spriteSize);
+	
+		if ($('#showSprites').prop('checked'))
+			drawWalls(map, spritesArray, spritesHidden, spriteSize);
+
 		let x = mapPos[0] * spriteSize;
 		let y = mapPos[1] * spriteSize;
 		map.beginPath();
@@ -207,6 +249,7 @@ $(document).ready(function() {
 		map.lineTo(x + spriteSize, y + spriteSize);
 		map.lineTo(x + spriteSize, y);
 		map.lineTo(x, y);
+		map.strokeStyle = "green";
 		map.stroke();
 
 		tiles.fillStyle = "#FFFFFF";

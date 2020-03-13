@@ -9,9 +9,22 @@
   	<script src="js/mapmaker.js"></script>
 </head> 
 	<body>
-		<canvas style="float: left; border: 1px solid" id='canvas' width="720" height="720"></canvas> 
-		<canvas style="float: left" id='sprites' width="600" height="600"></canvas> 
-		<button id="export">Export to console</button>
-		<canvas style="display: none" id='spritesHidden' width="600" height="600"></canvas> 
+		<div style="float: left">
+			<canvas style="border: 1px solid" id='canvas' width="720" height="720"></canvas>
+			<div>
+				<div style="margin-left: 50px; float: left">Toggle Layers</div>
+				<div style="float: left">
+					<label style="float: left"><input checked type="radio" name="sel" value="ground"><input checked type="checkbox" id="showGround"/>Ground</label>
+					<label style="float: left"><input type="radio" name="sel" value="walls"><input checked type="checkbox" id="showWalls"/>Walls</label>
+					<label style="float: left"><input type="radio" name="sel" value="overlay"><input checked type="checkbox" id="showOverlay"/>Overlay</label>
+					<label style="float: left"><input type="radio" name="sel" value="sprites"><input checked type="checkbox" id="showSprites"/>Sprites</label>
+				</div>
+				<button style="margin-left: 100px; float: left" id="export">Export All Layers</button>
+			</div>
+		</div>
+		<div class="scroll" style="width: 600px; height: 750px; overflow: scroll;">
+			<canvas style="float: left" id='sprites' width="1200" height="1200"></canvas> 
+		</div>
+		<canvas style="display: none" id='spritesHidden' width="1200" height="1200"></canvas> 
 	</body> 
 </html>
